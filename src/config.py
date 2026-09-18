@@ -12,8 +12,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-# Load variables from a .env file if one exists (local dev).
-# In Docker, variables are usually injected directly via env_file/environment.
+
 load_dotenv()
 
 # --- LLM settings -----------------------------------------------------
