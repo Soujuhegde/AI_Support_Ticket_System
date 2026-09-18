@@ -24,21 +24,39 @@ st.set_page_config(
 )
 
 # -----------------------------------------------------------------------------
-# Clean Light Theme Styles
+# Clean Light Theme Styles & Icon Fix
 # -----------------------------------------------------------------------------
 st.markdown(
     """
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
-    /* Global Typography & Light Background */
-    html, body, [class*="st-"] {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-        color: #1E293B !important;
+    /* Global Typography */
+    html, body, [data-testid="stAppViewContainer"], .stApp {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        color: #1E293B;
     }
 
+    /* Page Background */
     .stApp, [data-testid="stAppViewContainer"] {
         background-color: #F8FAFC !important;
+    }
+
+    /* Streamlit Material Icons font fix */
+    [data-testid="stIconMaterial"], .material-symbols-rounded, .material-icons, [class*="material-symbols"] {
+        font-family: "Material Symbols Rounded" !important;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 20px;
+        line-height: 1;
+        display: inline-block;
+        text-transform: none;
+        letter-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        direction: ltr;
+        -webkit-font-smoothing: antialiased;
     }
 
     /* Hide Default Header & Footer */
@@ -434,6 +452,10 @@ st.markdown(
         border-radius: 10px !important;
         margin-top: 18px !important;
     }
+
+    div[data-testid="stExpander"] summary {
+        color: #334155 !important;
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -604,7 +626,7 @@ with tab_query:
                     unsafe_allow_html=True,
                 )
 
-                # Render Table in Pure Light Theme with Badges
+                # Show table if there are multiple records
                 if isinstance(result["result"], list) and result["result"]:
                     st.markdown("<div class='tm-section-heading'>Matching Tickets</div>", unsafe_allow_html=True)
                     render_light_table(result["result"])
@@ -639,7 +661,7 @@ with tab_anomalies:
     stale_list = report.get("stale_high_priority", [])
     cutoff_hours = report.get("resolution_time_threshold_hrs", 0)
 
-    # 3 Summary Cards
+    # 3 Plain-English Summary Cards
     st.markdown(
         f"""
         <div class="tm-kpi-row">
@@ -663,14 +685,14 @@ with tab_anomalies:
         unsafe_allow_html=True,
     )
 
-    # Section 1: Slow resolved tickets (Pure Light Theme Table)
+    # Section 1: Slow resolved tickets
     st.markdown(f"<div class='tm-section-heading'>Tickets That Took Unusually Long to Resolve ({len(long_res_list)})</div>", unsafe_allow_html=True)
     if long_res_list:
         render_light_table(long_res_list)
     else:
         st.info("Great news! No tickets exceeded the resolution time limit.")
 
-    # Section 2: Stuck urgent tickets (Pure Light Theme Table)
+    # Section 2: Stuck urgent tickets
     st.markdown(f"<div class='tm-section-heading'>Urgent Tickets Waiting for More Than {config.ANOMALY_STALE_HOURS} Hours ({len(stale_list)})</div>", unsafe_allow_html=True)
     if stale_list:
         render_light_table(stale_list)
