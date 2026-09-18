@@ -1,16 +1,15 @@
 """
-Rule-based anomaly detection over the ticket data.
+Rule-based detection to find delayed and problem tickets.
 
-Deliberately NOT machine-learning-based: with ~500 rows and a fixed
-schema, simple, explainable thresholds are more defensible and easier
-to reason about than a trained model. No LLM call happens here, so
-this module runs instantly and is fully unit-testable offline.
+Why simple rules instead of AI / Machine Learning?
+With only 500 tickets, simple mathematical limits (like finding the slowest 10%
+or tickets open for >24 hours) are 100% explainable, run instantly, and are easy
+to test without needing complex AI models.
 
-Design note on "now": the CSV is a static historical snapshot, so
-"stale unresolved tickets" is measured relative to the most recent
-ticket's created_at in the dataset (not the real wall-clock date),
-so results stay meaningful no matter when this is run. See README
-for how to point this at real wall-clock time in production.
+Why we use the latest ticket date as "current time":
+The CSV dataset is from early 2024. If we compared against today's real date,
+every ticket would look years old. So we treat the newest ticket in the CSV
+as "current time" to get accurate, realistic results.
 """
 
 from typing import Optional
