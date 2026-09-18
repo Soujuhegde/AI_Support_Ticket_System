@@ -57,7 +57,7 @@ A: {{"metric": "count", "metric_column": null, "filters": [{{"column": "status",
 Q: "Which agent has the lowest average customer rating?"
 A: {{"metric": "average", "metric_column": "customer_rating", "filters": [], "group_by": "agent_id", "sort": "asc", "limit": 1}}
 
-Q: "Show me all Critical tickets not resolved within 12 hours."
+Q: "Show me all Critical tickets that took longer than 12 hours to resolve."
 A: {{"metric": "list", "metric_column": null, "filters": [{{"column": "priority", "operator": "eq", "value": "Critical"}}, {{"column": "resolution_time_hrs", "operator": "gt", "value": 12}}], "group_by": null, "sort": null, "limit": null}}
 
 Q: "What is the average customer rating for Technical category tickets?"

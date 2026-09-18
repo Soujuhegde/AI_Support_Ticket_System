@@ -600,8 +600,8 @@ with tab_query:
             select_prompt("What is the average customer rating for Technical category tickets?")
             st.rerun()
     with c4:
-        if st.button("Critical unresolved tickets?", key="chip_crit", use_container_width=True):
-            select_prompt("Show me all Critical tickets not resolved within 12 hours.")
+        if st.button("Slow Critical tickets (>12h)?", key="chip_crit", use_container_width=True):
+            select_prompt("Show me all Critical tickets that took longer than 12 hours to resolve.")
             st.rerun()
 
     # Query Execution
